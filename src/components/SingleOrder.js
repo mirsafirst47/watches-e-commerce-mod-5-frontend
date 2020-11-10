@@ -16,11 +16,11 @@ class SingleOrder extends Component{
 
     render(){
         let allPastOrders = this.props.past_order.transactions.map(watch_order => {
-            return <li>{watch_order.watch_name}</li>
+            return <li key={watch_order.id}>{watch_order.watch_name}</li> 
         })
         return(
             <>
-                <p onClick={this.handleClick}>{this.props.past_order}</p>
+                <p onClick={this.handleClick}>{this.props.past_order.timestamp}</p>
                 { this.state.clicked
                     ?
                 <ul>

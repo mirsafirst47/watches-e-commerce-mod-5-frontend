@@ -15,9 +15,9 @@ class Watches extends Component {
             )
         })
         return ( 
-            <>
+            <div className="row" align='center' >
                 { arrayOfComponents }
-            </>
+            </div>
         );
     }
 }

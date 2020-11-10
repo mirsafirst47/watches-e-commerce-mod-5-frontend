@@ -9,15 +9,20 @@
     "axios": "^0.20.0",
     "bootstrap": "^4.5.3",
     "bootstrap-icons": "^1.1.0",
+    "dotenv": "^8.2.0",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
+    "react-stripe-checkout": "^2.6.3",
+    "react-toastify": "^4.1.0",
     "rsuite": "^4.7.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

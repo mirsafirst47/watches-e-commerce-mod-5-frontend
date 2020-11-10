@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Form from './components/Form';
 import NavBar from './components/NavBar';
 import Watch from './components/Watch';
 import Watches from './components/Watches';
-// import WatchDetails from './components/WatchDetails';
-// import SignUp from './components/SignUp';
+import PastOrders from './components/PastOrders';
+import About from './components/About';
 import Home from './components/Home';
 import Cart from './components/Cart';
 import Profile from './components/Profile';
 import Search from './components/Search';
+// import ProtectedRoute from './ProtectedRoute';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 
@@ -68,9 +71,10 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(this.helpHandleResponse)
+      toast.success("You are now logged in")
   }
 
-  handleRegisterSubmit = (userInfo) => {
+  handleSignUpSubmit = (userInfo) => {
     console.log("Register form has been submitted")
 
     fetch("http://localhost:3000/users", {
@@ -85,11 +89,12 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(this.helpHandleResponse)
+    toast("Sign up successful")
   }
 
   handleLogOut = () => {
     this.setState({
-      watches: [],
+      // watches: [],
       token: "",
       username: "",
       current_order: {
@@ -99,11 +104,13 @@ class App extends Component {
       past_orders: []
     })
     localStorage.clear()
+    toast.success("Goodbye!")
   }
 
   helpHandleResponse = (resp) => {
     if(resp.error){
       console.log(resp.error)
+      toast.error("Wrong username or password")
     } else {
       localStorage.token = resp.token
       this.setState({
@@ -128,7 +135,7 @@ class App extends Component {
     } else if (routerProps.location.pathname === "/signup") {
       return <Form
         formName="Register Form"
-        handleSubmit={this.handleRegisterSubmit}
+        handleSubmit={this.handleSignUpSubmit}
       />
     }
   }
@@ -167,14 +174,13 @@ class App extends Component {
     })
       .then(res => res.json())
       .then((resp) => {
-        let copyOfPastOrders = [...this.state.past_orders, resp.transformed_cart]
+        let copyOfPastOrders = [...this.state.past_orders, resp.transformed_order]
         this.setState({
           current_order: resp.current_order,
           past_orders: copyOfPastOrders
         })
       })
   }
-
 
   render() { 
     console.log("STATE", this.state);
@@ -187,18 +193,13 @@ class App extends Component {
 
     return (
       <>
+        <ToastContainer />
         <NavBar />
-
-        {/* < Search 
-          searchTerm={this.state.searchTerm}
-          changeSearchTerm={this.changeSearchTerm}
-        /> */}
-
-        <main className="container">
+        <main role='main' className="container-fluid">
           <Switch>
             <Route path="/login" render={this.renderForm}/>
             <Route path="/signup" render={ this.renderForm } />
-            <Route path="/watches" >
+            <Route disabled={true} path="/watches" >
               < Search 
                 searchTerm={this.state.searchTerm}
                 changeSearchTerm={this.changeSearchTerm}
@@ -207,18 +208,20 @@ class App extends Component {
                 watches={filteredArray}
                 token={this.state.token}
                 placingWatchOrder={this.placingWatchOrder}
-                // cartSwap={this.cartSwap}
               />
             </Route>
             <Route path="/cart" > 
               <Cart
                 cartSwap={this.cartSwap}
                 current_order={this.state.current_order}
-                past_orders={this.state.past_orders}
               />
+              
             </Route>
-            <Route path="/profile" component={Profile}></Route>
-            {/* <Route path="/signup" component={SignUp}></Route> */}
+            <Route path="/past_orders">
+              <PastOrders past_orders={this.state.past_orders}/>
+            </Route>
+            <Route path="/profile" component={Profile}/>
+            <Route path="/about" component={About}/>
             <Route path="/watches/:id" component={Watch}/>
             <Route path="/" exact component={Home} />
           </Switch>
