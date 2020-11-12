@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Form from './components/Form';
 import NavBar from './components/NavBar';
-import Watch from './components/Watch';
 import Watches from './components/Watches';
 import PastOrders from './components/PastOrders';
 import About from './components/About';
@@ -10,15 +9,15 @@ import Home from './components/Home';
 import Cart from './components/Cart';
 import Profile from './components/Profile';
 import Search from './components/Search';
-// import ProtectedRoute from './ProtectedRoute';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+// import ProtectedRoute from './ProtectedRoute';
 
 
 class App extends Component {
 
-  state={
+  state = {
     watches: [],
     token: "",
     username: "",
@@ -71,7 +70,7 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(this.helpHandleResponse)
-      toast.success("You are now logged in")
+      // toast.success("You are now logged in")
   }
 
   handleSignUpSubmit = (userInfo) => {
@@ -119,6 +118,7 @@ class App extends Component {
         current_order: resp.user.current_order,
         past_orders: resp.user.past_orders
       })
+      toast("Welcome!")
     }
   }
 
@@ -140,7 +140,6 @@ class App extends Component {
     }
   }
 
-
   placingWatchOrder = (watch_id) => {
     fetch("http://localhost:3000/transactions", {
       method: "POST",
@@ -161,6 +160,27 @@ class App extends Component {
       }
       this.setState({
         current_order: copyOfOrder
+      })
+    })
+  }
+
+  deleteWatchTransaction = (transaction) => {
+    fetch(`http://localhost:3000/transactions/${transaction.id}`, {
+      method: "DELETE"
+    })
+    .then(res => res.json())
+    .then(deletedTransaction => {
+      console.log(deletedTransaction)
+
+      let updatedCart = this.state.current_order.transactions.filter(transaction => {
+        console.log(transaction)
+        return transaction.id !== deletedTransaction.id
+      })
+      let copyOfCart = {
+        ...this.state.current_order, transactions: updatedCart
+      }
+      this.setState({
+        current_order: copyOfCart
       })
     })
   }
@@ -194,35 +214,40 @@ class App extends Component {
     return (
       <>
         <ToastContainer />
-        <NavBar />
+        <NavBar username={this.state.username}/>
         <main role='main' className="container-fluid">
           <Switch>
             <Route path="/login" render={this.renderForm}/>
             <Route path="/signup" render={ this.renderForm } />
-            <Route disabled={true} path="/watches" >
+            <Route username={this.state.username} path="/watches" >
               < Search 
                 searchTerm={this.state.searchTerm}
                 changeSearchTerm={this.changeSearchTerm}
               />
               <Watches
                 watches={filteredArray}
-                token={this.state.token}
                 placingWatchOrder={this.placingWatchOrder}
               />
             </Route>
             <Route path="/cart" > 
               <Cart
                 cartSwap={this.cartSwap}
+                deleteWatchTransaction={this.deleteWatchTransaction}
                 current_order={this.state.current_order}
               />
-              
             </Route>
             <Route path="/past_orders">
-              <PastOrders past_orders={this.state.past_orders}/>
+              <PastOrders 
+                past_orders={this.state.past_orders}
+              />
             </Route>
-            <Route path="/profile" component={Profile}/>
+            <Route path="/profile">
+              <Profile
+                username={this.state.username}
+                renderProfile={this.rednerProfile}
+              />
+            </Route>
             <Route path="/about" component={About}/>
-            <Route path="/watches/:id" component={Watch}/>
             <Route path="/" exact component={Home} />
           </Switch>
         </main>

@@ -4,7 +4,7 @@ import React from 'react'
     // You need variable declaration
 
 function Search(props){
-
+    
     const handleInput = (evt) => {
         props.changeSearchTerm(evt.target.value)
     }

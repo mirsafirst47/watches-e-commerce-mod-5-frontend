@@ -5,26 +5,24 @@ class StripeComponent extends React.Component {
 
     render(){
 
-        function onToken(token) {
-            // save the token id to a variable to then use it in the body of the fetch.
+        let onToken= (token) => {
+
             const charge = {
                 token: token.id
             };
 
-            // fetch to the charge controller which handles the Stripe API transaction.
             fetch('http://localhost:3000/charges', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ 
-                    // Stripe API need at least a token and a price.
                     charge: charge,
-                    // price: this.props.total.totalSum * 100
+                    price: this.props.price
                 })
             })
             .then(res => res.json())
-            .then(data => console.log(data));
+            .then(data => {this.props.sendToPastOrders()});
             
         };
 
@@ -37,7 +35,7 @@ class StripeComponent extends React.Component {
                     billingAddress
                     shippingAddress
                 >
-                    <button className="btn btn-outline-warning"><i className="fa fa-shopping-cart" aria-hidden="true"></i> Checkout</button>
+                    <button className="btn btn-outline-warning" disabled={this.props.price === 0}><i className="fa fa-shopping-cart" aria-hidden="true"></i> Checkout</button>
                 </StripeCheckout>
             </div>
         );
