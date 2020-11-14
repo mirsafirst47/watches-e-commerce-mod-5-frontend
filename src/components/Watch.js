@@ -13,7 +13,7 @@ const Watch = (props) => {
 
     return (
         <div className="col-sm-4" text-align='center' style={{ padding_top: '88px'}}>
-            <img id="myImg" src={watch.image_url} style={{ display: 'inline-block', width: '85%'}} alt={watch.name}/>
+            <img className="img-hover-zoom" id="myImg" src={watch.image_url} style={{ display: 'inline-block', width: '85%'}} alt={watch.name}/>
             <h6>{watch.brand}</h6>
             <h4>{watch.name}</h4>
             <h5>{watch.color}</h5>

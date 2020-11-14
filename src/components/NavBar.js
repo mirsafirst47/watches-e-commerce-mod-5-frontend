@@ -19,12 +19,12 @@ const NavBar = (props) => {
                     <br></br>
                     <NavLink className="btn btn-outline-success" to="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>Cart </NavLink>
                 </div>
-                <div className="dropdown" align-text='center'>
+                <div className="btn-group dropleft">
                     <button className="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {props.username ? props.username : "info"}
                     </button>
                     <div className="dropdown-menu">
-                        <Link className="dropdown-item" to="/profile">Profile</Link>
+                        {/* <Link className="dropdown-item" to="/profile">Profile</Link> */}
                         <Link className="dropdown-item" to="past_orders">Order History</Link>
                     </div>
                 </div>

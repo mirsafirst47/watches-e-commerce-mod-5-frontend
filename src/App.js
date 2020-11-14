@@ -7,11 +7,11 @@ import PastOrders from './components/PastOrders';
 import About from './components/About';
 import Home from './components/Home';
 import Cart from './components/Cart';
-import Profile from './components/Profile';
 import Search from './components/Search';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+// import Profile from './components/Profile';
 // import ProtectedRoute from './ProtectedRoute';
 
 
@@ -241,14 +241,14 @@ class App extends Component {
                 past_orders={this.state.past_orders}
               />
             </Route>
-            <Route path="/profile">
-              <Profile
-                username={this.state.username}
-                renderProfile={this.rednerProfile}
-              />
-            </Route>
             <Route path="/about" component={About}/>
             <Route path="/" exact component={Home} />
+
+            {/* <Route path="/profile">
+              <Profile
+                username={this.state.username}
+              />
+            </Route> */}
           </Switch>
         </main>
       </>

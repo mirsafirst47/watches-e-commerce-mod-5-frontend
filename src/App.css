@@ -4,9 +4,13 @@
 
 body {
   background-color: #061C29;
+  /* background-image: url(https://images.unsplash.com/photo-1545486332-9e0999c535b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80); */
+  /* background-repeat: no-repeat; */
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
   color: #f8f1c9;
-  /* padding: 10px; */
-  font-family: cursive;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   text-align: center;
 }
 
@@ -44,5 +48,3 @@ body {
     transform: rotate(360deg);
   }
 }
-
-

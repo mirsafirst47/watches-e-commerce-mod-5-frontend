@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Panel} from 'rsuite';
+import { Link } from 'react-router-dom';
 
 class About extends Component {
     state = {  }
@@ -15,10 +16,10 @@ class About extends Component {
                 <h2>Web Designer</h2>
                 <br></br>
                 <div>
-                    <div className="column">
-                        <h4> Samir Triande </h4>
-                        <img src="" width="200" height="200" className="center" alt="" ></img>
-                    </div>
+                    <h4> Samir Triande </h4>
+                    <a href="https://github.com/mirsafirst47">
+                        <img src="https://www.pngkey.com/png/full/6-60527_coming-soon-profile-picture-coming-soon.png" width="200" height="200" className="center" alt="" ></img>
+                    </a>
                 
                 </div>
             </div>
