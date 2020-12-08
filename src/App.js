@@ -11,8 +11,6 @@ import Search from './components/Search';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
-// import Profile from './components/Profile';
-// import ProtectedRoute from './ProtectedRoute';
 
 
 class App extends Component {
@@ -243,12 +241,6 @@ class App extends Component {
             </Route>
             <Route path="/about" component={About}/>
             <Route path="/" exact component={Home} />
-
-            {/* <Route path="/profile">
-              <Profile
-                username={this.state.username}
-              />
-            </Route> */}
           </Switch>
         </main>
       </>
