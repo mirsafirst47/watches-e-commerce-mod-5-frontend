@@ -29,7 +29,7 @@ const CurrentOrder = (props) => {
         <ul id="order-list">
             { totalSum === 0
             ?
-            <h6>Your cart is empty</h6>
+            <h6>Your cart is currently empty</h6>
             :
             arrOfComps
             }
